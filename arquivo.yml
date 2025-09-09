@@ -1,0 +1,23 @@
+version: '3.8'
+
+# Arquivo de exemplo para ambiente QA
+services:
+  web:
+    # Imagem utilizada para criar o container
+    image: nginx:latest
+    # Mapeia as portas que serão utilizadas (porta diferente para evitar conflito)
+    ports:
+      - "8081:80"
+
+  db:
+    image: postgres:15-alpine
+    # Define as variáveis de ambiente (vindo de um arquivo .env.qa)
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # Volume temporário para não persistir dados após os testes
+    volumes:
+      - db_data_qa:/var/lib/postgresql/data
+
+volumes:
+  db_data_qa:
+    driver: local
