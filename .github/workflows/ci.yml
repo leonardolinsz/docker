@@ -1,0 +1,16 @@
+name: CI - Build e Teste da imagem do Docker
+
+on: [push]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Baixar o código do repositório
+        uses: actions/checkout@v3
+
+      - name: 2. Construir a imagem do Docker
+        run: docker build -t app-teste:local .
+
+      - name: 3. Executar o container para validar
+        run: docker run --rm app-teste:local
